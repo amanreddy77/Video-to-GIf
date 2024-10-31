@@ -1,15 +1,18 @@
 const getFFmpeg = () => {
   if (!("FFmpeg" in window)) {
     throw new Error("FFmpeg could not be loaded.");
-  } else if (!("SharedArrayBuffer" in window)) {
+  } 
+  if (!("SharedArrayBuffer" in window)) {
     throw new Error("SharedArrayBuffer could not be used.");
   }
+  
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (window as any).FFmpeg;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let ffmpeg: any | null = null;
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const loadFFmpeg = async (): Promise<any> => {
   if (ffmpeg == null) {
@@ -50,10 +53,12 @@ export const convVideoToGif = async (file: File, settings: ConvertSetting): Prom
     },fade=t=in:st=${rangeStart}:d=0.05`,
     "output.gif"
   );
-  return ffmpeg.FS("readFile", "output.gif").buffer;
+
+  const data = ffmpeg.FS("readFile", "output.gif");
+  return new Blob([data.buffer], { type: 'image/gif' });
 };
 
-export const checkCanUseFFmpeg = (): /* errorMessage: */ string | null => {
+export const checkCanUseFFmpeg = (): string | null => {
   try {
     getFFmpeg();
     return null;

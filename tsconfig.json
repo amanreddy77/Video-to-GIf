@@ -1,9 +1,8 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "jsxFactory": "React.createElement",
     "esModuleInterop": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",  // Change this if using React 17+
     "lib": [
       "esnext",
       "dom"
